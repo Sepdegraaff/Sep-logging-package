@@ -1,0 +1,20 @@
+{
+    "name": "sep/logging-package",
+    "description": "A simple logging package",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Sep\\LoggingPackage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "SepdeGraaff",
+            "email": "sep.de.graaff@maxserv.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.2"
+    }
+}

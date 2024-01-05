@@ -1,0 +1,2 @@
+[2024-01-05 11:45:33][Metadata]: User login attempt failed.- Metadata: {"user_id":123,"action":"login_attempt","device":"mobile"}
+[2024-01-05 11:48:45][Metadata]: Login attempt failed.- Metadata: {"user_id":123,"action":"login_attempt","device":"mobile"}

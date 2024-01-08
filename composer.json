@@ -4,7 +4,7 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Sep\\LoggingPackage\\": "src/Sep/logger",
+            "Sep\\LoggingPackage\\": "src/Sep/app",
             "Sep\\Testing\\": "src/Sep/modules/"
         }
     },
@@ -16,6 +16,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=8.2"
+        "php": ">=8.2",
+      "ext-fileinfo": "*"
     }
 }

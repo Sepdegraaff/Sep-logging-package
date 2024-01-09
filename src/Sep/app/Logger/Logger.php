@@ -1,40 +1,135 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sep\LoggingPackage\Logger;
 
+use Sep\LoggingPackage\Interfaces\FormatInterface;
+use Sep\LoggingPackage\Interfaces\InterpolatorInterface;
+use Sep\LoggingPackage\Interfaces\LoggerInterface;
 use Sep\LoggingPackage\Interfaces\WriterInterface;
 
-class Logger
+class Logger implements LoggerInterface
 {
+    /**
+     * Default logger class
+     *
+     * Basic usage logger class
+     * Includes standard file-writer & interpolator
+     *
+     */
     private WriterInterface $writer;
+    private InterpolatorInterface $interpolator;
 
-    public string $fileName;
+    private FormatInterface $formatter;
 
-    public function __construct(WriterInterface $writer, $fileName)
+    /**
+     * @param WriterInterface $writer
+     * @param InterpolatorInterface $interpolator
+     */
+    public function __construct(WriterInterface $writer, InterpolatorInterface $interpolator, FormatInterface $formatter)
     {
         $this->writer = $writer;
-        $this->fileName = $fileName;
+        $this->interpolator = $interpolator;
+        $this->formatter = $formatter;
     }
 
-    public function log(string $message, string $severity): void
+    /**
+     * @param string $severity
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function log(string $severity, string $message, array $context = []): void
     {
-        $timestamp = date('Y-m-d H:i:s');
-        $entry = "[$timestamp][$severity]: $message" . PHP_EOL;
-        $this->writer->write($this->fileName, $entry);
+        $severity = strtoupper($severity);
+
+        if (!$context) {
+            $entry = $this->formatter->format($message, $severity);
+        } else {
+            $entry = $this->formatter->format($this->interpolator->interpolate($message, $context), $severity);
+        }
+
+        $this->writer->write($entry . PHP_EOL);
     }
 
-    public function fatal(string $message): void
+    /**
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function critical(string $message, array $context = []): void
     {
-        $this->log($message, 'fatal');
+        $this->log(LogLevels::CRITICAL, $message, $context);
     }
 
-    public function error(string $message): void
+    /**
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function error(string $message, array $context = []): void
     {
-        $this->log($message, 'error');
+        $this->log(LogLevels::ERROR, $message, $context);
     }
 
-    public function warning(string $message): void
+    /**
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function warning(string $message, array $context = []): void
     {
-        $this->log($message, 'warning');
+        $this->log(LogLevels::WARNING, $message, $context);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function info(string $message, array $context = []): void
+    {
+        $this->log(LogLevels::INFO, $message, $context);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function debug(string $message, array $context = []): void
+    {
+        $this->log(LogLevels::DEBUG, $message, $context);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function notice(string $message, array $context = []): void
+    {
+        $this->log(LogLevels::NOTICE, $message, $context);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function alert(string $message, array $context = []): void
+    {
+        $this->log(LogLevels::ALERT, $message, $context);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function emergency(string $message, array $context = []): void
+    {
+        $this->log(LogLevels::EMERGENCY, $message, $context);
     }
 }

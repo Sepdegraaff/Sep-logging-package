@@ -17,6 +17,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=8.2",
-      "ext-fileinfo": "*"
+      "ext-fileinfo": "*",
+      "ext-curl": "*"
     }
 }

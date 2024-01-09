@@ -6,5 +6,8 @@ namespace Sep\LoggingPackage\Interfaces;
 
 interface WriterInterface
 {
-    public function write(string $name, string $content);
+    /**
+     * Use to make writers
+     */
+    public function write(string $content);
 }

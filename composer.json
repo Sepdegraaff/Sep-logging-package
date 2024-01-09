@@ -4,8 +4,8 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Sep\\LoggingPackage\\": "src/Sep/app",
-            "Sep\\Testing\\": "src/Sep/modules/"
+            "Sep\\LoggingPackage\\": "src/app",
+            "Sep\\Testing\\": "src/modules/"
         }
     },
     "authors": [

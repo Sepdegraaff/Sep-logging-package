@@ -9,6 +9,7 @@ use Sep\LoggingPackage\Interfaces\FormatInterface;
 use Sep\LoggingPackage\Interfaces\InterpolatorInterface;
 use Sep\LoggingPackage\Interfaces\LoggerInterface;
 use Sep\LoggingPackage\Interfaces\WriterInterface;
+use Sep\LoggingPackage\Interpolator\ArrayInterpolator;
 
 class Logger implements LoggerInterface
 {
@@ -26,10 +27,10 @@ class Logger implements LoggerInterface
 
     /**
      * @param WriterInterface $writer
-     * @param InterpolatorInterface|null $interpolator
+     * @param InterpolatorInterface $interpolator
      * @param FormatInterface $formatter
      */
-    public function __construct(WriterInterface $writer, InterpolatorInterface $interpolator = null, FormatInterface $formatter = new StandardFormat())
+    public function __construct(WriterInterface $writer, InterpolatorInterface $interpolator = new ArrayInterpolator(), FormatInterface $formatter = new StandardFormat())
     {
         $this->writer = $writer;
         $this->interpolator = $interpolator;
@@ -48,7 +49,8 @@ class Logger implements LoggerInterface
 
         if (!$context) {
             $entry = $this->formatter->format($message, $severity);
-        } else {
+        }
+        else {
             $entry = $this->formatter->format($this->interpolator->interpolate($message, $context), $severity);
         }
 

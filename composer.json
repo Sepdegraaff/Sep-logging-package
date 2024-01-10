@@ -14,6 +14,7 @@
             "email": "sep.de.graaff@maxserv.com"
         }
     ],
+    "license": "MIT",
     "minimum-stability": "dev",
     "require": {
         "php": ">=8.2",

@@ -26,10 +26,10 @@ class Logger implements LoggerInterface
 
     /**
      * @param WriterInterface $writer
-     * @param InterpolatorInterface $interpolator
+     * @param InterpolatorInterface|null $interpolator
      * @param FormatInterface $formatter
      */
-    public function __construct(WriterInterface $writer, InterpolatorInterface $interpolator, FormatInterface $formatter)
+    public function __construct(WriterInterface $writer, InterpolatorInterface $interpolator = null, FormatInterface $formatter = new StandardFormat())
     {
         $this->writer = $writer;
         $this->interpolator = $interpolator;

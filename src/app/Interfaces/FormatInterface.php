@@ -6,5 +6,5 @@ namespace Sep\LoggingPackage\Interfaces;
 
 interface FormatInterface
 {
-    public function format(string $message, string $severity): string;
+    public function format(string $message, string $severity);
 }

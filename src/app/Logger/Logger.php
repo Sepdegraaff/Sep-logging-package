@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sep\LoggingPackage\Logger;
 
+use Sep\LoggingPackage\Formatter\StandardFormat;
 use Sep\LoggingPackage\Interfaces\FormatInterface;
 use Sep\LoggingPackage\Interfaces\InterpolatorInterface;
 use Sep\LoggingPackage\Interfaces\LoggerInterface;
@@ -26,6 +27,7 @@ class Logger implements LoggerInterface
     /**
      * @param WriterInterface $writer
      * @param InterpolatorInterface $interpolator
+     * @param FormatInterface $formatter
      */
     public function __construct(WriterInterface $writer, InterpolatorInterface $interpolator, FormatInterface $formatter)
     {

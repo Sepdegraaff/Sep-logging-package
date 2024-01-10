@@ -10,29 +10,26 @@ class ApiWriter implements WriterInterface
 {
     protected string $apiKey;
     protected string $apiUrl;
-    protected string $channelId;
 
-    public function __construct(string $apiKey, string $channelId, string $apiUrl)
+    public function __construct(string $apiKey, string $apiUrl)
     {
         $this->apiKey = $apiKey;
-        $this->channelId = $channelId;
         $this->apiUrl = $apiUrl;
     }
 
+    /**
+     * @param string $content
+     * @throws \JsonException
+     */
     public function write(string $content): void
     {
-        $data = [
-            'channel' => $this->channelId,
-            'text' => $content,
-        ];
-
         try {
             $ch = curl_init($this->apiUrl);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/x-www-form-urlencoded',
+                'Content-Type: application/json',
                 'Authorization: Bearer ' . $this->apiKey,
             ]);
 
@@ -44,7 +41,7 @@ class ApiWriter implements WriterInterface
 
             $response = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
             if (isset($response['ok']) && !$response['ok']) {
-                throw new \RuntimeException('Slack API Error: ' . $response['error']);
+               throw new \RuntimeException('Slack API Error: ' . $response['error']);
             }
         } catch (\Throwable $exception) {
             echo "Error: " . $exception->getMessage();

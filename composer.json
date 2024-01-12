@@ -5,7 +5,6 @@
     "autoload": {
         "psr-4": {
             "Sep\\LoggingPackage\\": "src/app",
-            "Sep\\Testing\\": "src/modules/"
         }
     },
     "authors": [
